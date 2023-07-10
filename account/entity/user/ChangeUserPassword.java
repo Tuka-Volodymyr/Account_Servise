@@ -1,4 +1,4 @@
-package account.entity;
+package account.entity.user;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;

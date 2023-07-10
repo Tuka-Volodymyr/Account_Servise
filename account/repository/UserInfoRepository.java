@@ -1,10 +1,9 @@
 package account.repository;
 
-import account.entity.User;
+import account.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.YearMonth;
 import java.util.Optional;
 @Repository
 public interface UserInfoRepository extends JpaRepository<User, Integer> {

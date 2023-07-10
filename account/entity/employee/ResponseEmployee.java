@@ -1,4 +1,4 @@
-package account.entity;
+package account.entity.employee;
 
 import account.exceptions.employeeExceptions.WrongDateException;
 import jakarta.validation.constraints.NotBlank;

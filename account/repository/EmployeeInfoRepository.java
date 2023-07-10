@@ -1,11 +1,9 @@
 package account.repository;
 
-import account.entity.Employee;
-import account.entity.User;
+import account.entity.employee.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Optional;
 

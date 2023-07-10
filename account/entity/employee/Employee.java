@@ -1,4 +1,4 @@
-package account.entity;
+package account.entity.employee;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
