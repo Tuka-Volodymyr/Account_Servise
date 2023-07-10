@@ -41,7 +41,7 @@ public class AccountRestController {
         return accountService.changeSalary(employee);
     }
     @GetMapping(value="/empl/payment",params = "period")
-    public ResponseEntity<?> getSalaryForPeriod(@AuthenticationPrincipal UserDetails details, @RequestParam String period){
+    public ResponseEntity<?> getSalaryForPeriod(@AuthenticationPrincipal UserDetails details, @RequestParam  String period){
         return accountService.getEmployeeSalaryWithPeriod(details,period);
     }
     @GetMapping(value = "/empl/payment")

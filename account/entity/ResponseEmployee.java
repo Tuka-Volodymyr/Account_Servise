@@ -18,7 +18,8 @@ public class ResponseEmployee {
         this.lastname=lastname;
         String[] arrayOfDate=period.split("-");
         LocalDate localDate=LocalDate.of(Integer.parseInt(arrayOfDate[1]),Integer.parseInt(arrayOfDate[0]),3);
-        this.period=localDate.getMonth()+"-"+localDate.getYear();
+        this.period=String.format("%s%s-%s",String.valueOf(localDate.getMonth()).charAt(0),
+                String.valueOf(localDate.getMonth()).substring(1).toLowerCase(),localDate.getYear());
         String firstStr = salary.substring(0, salary.length() - 2);
         String secondStr = salary.substring(salary.length() - 2);
         if(salary.length()<=2)firstStr="0";

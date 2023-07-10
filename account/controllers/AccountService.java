@@ -72,7 +72,7 @@ public class AccountService {
         for(Employee emp:listOfEmp){
             Optional<User> accountExist = userInfoRepository.findByEmailIgnoreCase(emp.getEmployee());
             if(accountExist.isEmpty())throw new UserNotFoundException();
-            Optional<Employee> salaryAlreadyExist=employeeInfoRepository.findByEmployeeAndPeriodIgnoreCase(emp.getEmployee(),emp.getPeriod());
+            Optional<Employee> salaryAlreadyExist=employeeInfoRepository.findByEmployeeIgnoreCaseAndPeriod(emp.getEmployee(),emp.getPeriod());
             if(salaryAlreadyExist.isPresent())throw new EmployeeExistException();
             if(!emp.getPeriod().matches(availableDate))throw new WrongDateException();
             checkSalary(emp);
@@ -82,7 +82,7 @@ public class AccountService {
     }
     public ResponseEntity<?> changeSalary(Employee employee){
         Optional<Employee> salaryAlreadyExist=employeeInfoRepository.
-                findByEmployeeAndPeriodIgnoreCase(employee.getEmployee(),employee.getPeriod());
+                findByEmployeeIgnoreCaseAndPeriod(employee.getEmployee(),employee.getPeriod());
         if(salaryAlreadyExist.isEmpty())throw new EmployeeNotFoundException();
         checkSalary(employee);
         salaryAlreadyExist.get().setSalary(employee.getSalary());
@@ -94,7 +94,7 @@ public class AccountService {
         Optional<User> accountExist = userInfoRepository.findByEmailIgnoreCase(userDetails.getUsername());
         if(accountExist.isEmpty())throw new UserNotFoundException();
         Optional<Employee> employeeAlreadyUse = employeeInfoRepository.
-                findByEmployeeAndPeriodIgnoreCase(userDetails.getUsername(),period);
+                findByEmployeeIgnoreCaseAndPeriod(userDetails.getUsername(),period);
         if(employeeAlreadyUse.isEmpty())throw new EmployeeNotFoundException();
         ResponseEmployee responseEmployee=new ResponseEmployee(accountExist.get().getName(),accountExist.get().getLastname(),
                 employeeAlreadyUse.get().getPeriod(),String.valueOf(employeeAlreadyUse.get().getSalary()));
@@ -104,7 +104,7 @@ public class AccountService {
     //order is wrong
     public ResponseEntity<?> getAllEmployeeSalary(UserDetails userDetails) {
         Optional<User> accountExist = userInfoRepository.findByEmailIgnoreCase(userDetails.getUsername());
-        ArrayList<Employee> employeeArrayList = employeeInfoRepository.findByEmployeeIgnoreCase(userDetails.getUsername());
+        ArrayList<Employee> employeeArrayList = employeeInfoRepository.findByEmployeeIgnoreCaseOrderByIdDesc(userDetails.getUsername());
         ArrayList<ResponseEmployee> responseEmployeeArrayList = new ArrayList<>();
         for (Employee emp : employeeArrayList) {
             responseEmployeeArrayList.add(new ResponseEmployee(accountExist.get().getName(), accountExist.get().getLastname(), emp.getPeriod(), String.valueOf(emp.getSalary())));
