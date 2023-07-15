@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeInfoRepository extends JpaRepository<Employee,Integer> {
-//    boolean existsByEmployeeIgnoreCaseAndPeriod(String employee, YearMonth period);
+     boolean existsByEmployeeIgnoreCaseAndPeriod(String employee, String period);
 
     Optional<Employee> findByEmployeeIgnoreCaseAndPeriod(String emp, String period);
     ArrayList<Employee> findByEmployeeIgnoreCaseOrderByIdDesc(String emp);

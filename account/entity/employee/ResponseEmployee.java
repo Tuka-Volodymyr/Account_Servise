@@ -1,12 +1,15 @@
 package account.entity.employee;
 
-import account.exceptions.employeeExceptions.WrongDateException;
+
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
-
+@Getter
+@Setter
 public class ResponseEmployee {
     private String name;
     private String lastname;
@@ -24,38 +27,6 @@ public class ResponseEmployee {
         String secondStr = salary.substring(salary.length() - 2);
         if(salary.length()<=2)firstStr="0";
         this.salary=String.format("%s dollar(s) %s cent(s)",firstStr,secondStr);
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
 

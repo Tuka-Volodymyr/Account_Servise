@@ -1,4 +1,4 @@
-package account.exceptions.employeeExceptions;
+package account.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -3,25 +3,24 @@ package account.services;
 import account.entity.employee.Employee;
 import account.entity.employee.ResponseEmployee;
 import account.entity.user.User;
-import account.exceptions.employeeExceptions.EmployeeExistException;
-import account.exceptions.employeeExceptions.EmployeeNotFoundException;
-import account.exceptions.employeeExceptions.SalaryNegativeException;
-import account.exceptions.employeeExceptions.WrongDateException;
-import account.exceptions.userExceptions.UserNotFoundException;
+
+import account.exceptions.EmployeeNotFoundException;
+
+
+import account.exceptions.UserNotFoundException;
 import account.repository.EmployeeInfoRepository;
 import account.repository.UserInfoRepository;
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @Service
 public class EmployeeService {
@@ -29,18 +28,23 @@ public class EmployeeService {
     private UserInfoRepository userInfoRepository;
     @Autowired
     private EmployeeInfoRepository employeeInfoRepository;
+    @Autowired
+    EntityManagerFactory entityManagerFactory;
     public ResponseEntity<?> addPayment(ArrayList<Employee> listOfEmp){
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
         String availableDate="^(0[1-9]|1[012])-((19|2[0-9])[0-9]{2})$";
         for(Employee emp:listOfEmp){
-            User accountExist = userInfoRepository
-                    .findByEmailIgnoreCase(emp.getEmployee())
-                    .orElseThrow(UserNotFoundException::new);
+            if (!userInfoRepository.existsByEmailIgnoreCase(emp.getEmployee())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee with specified email not found");
+            }
             Optional<Employee> salaryAlreadyExist=employeeInfoRepository.findByEmployeeIgnoreCaseAndPeriod(emp.getEmployee(),emp.getPeriod());
-            if(salaryAlreadyExist.isPresent())throw new EmployeeExistException();
-            if(!emp.getPeriod().matches(availableDate))throw new WrongDateException();
+            if(salaryAlreadyExist.isPresent())throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Date of salary has already existed!");
+            if(!emp.getPeriod().matches(availableDate))throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Wrong date!");
             checkSalary(emp);
             employeeInfoRepository.save(emp);
         }
+//        entityManager.getTransaction().commit();
         return new ResponseEntity<>(Map.of("status","Added successfully!"), HttpStatus.OK);
     }
     public ResponseEntity<?> changeSalary(Employee employee){
@@ -83,6 +87,6 @@ public class EmployeeService {
         return new ResponseEntity<>(responseEmployeeArrayList, HttpStatus.OK);
     }
     public void checkSalary(Employee emp){
-        if (emp.getSalary()<0)throw new SalaryNegativeException();
+        if (emp.getSalary()<0)throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Wrong salary!");;
     }
 }

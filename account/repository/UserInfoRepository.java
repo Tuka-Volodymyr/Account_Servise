@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface UserInfoRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmailIgnoreCase(String email);
     Optional<User> findByName(String name);
-//    boolean existsByEmailIgnoreCase(String employee, YearMonth period);
+    boolean existsByEmailIgnoreCase(String email);
     @Override
     <S extends User> S save(S entity);
 }

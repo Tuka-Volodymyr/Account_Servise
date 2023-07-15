@@ -2,8 +2,12 @@ package account.entity.employee;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name="EMPLOYEES")
 public class Employee {
     @Id
@@ -16,35 +20,4 @@ public class Employee {
 
     private long salary;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public long getSalary() {
-        return salary;
-    }
-
-    public String getEmployee() {
-        return employee;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setEmployee(String employee) {
-        this.employee = employee;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public void setSalary(long salary) {
-        this.salary = salary;
-    }
 }

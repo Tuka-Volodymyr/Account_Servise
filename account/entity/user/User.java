@@ -3,15 +3,15 @@ package account.entity.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name="USER_CUS")
 public class User {
 
@@ -40,44 +40,4 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
-
-    public String getPassword() {
-        return password;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-
-
 }
