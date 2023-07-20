@@ -6,7 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserInfoDetails implements UserDetails {
     private final User user;
@@ -15,8 +17,9 @@ public class UserInfoDetails implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");
-        return List.of(authority);
+        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        for(String role: user.getRoles())authorities.add(new SimpleGrantedAuthority(role));
+        return authorities;
     }
 
     @Override

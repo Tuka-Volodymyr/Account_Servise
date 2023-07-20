@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 @Getter
 @Setter
@@ -16,6 +18,7 @@ public class ResponseEmployee {
     private String period;
 
     private String salary;
+
     public ResponseEmployee(String name,String lastname,String period,String salary){
         this.name=name;
         this.lastname=lastname;
@@ -27,6 +30,38 @@ public class ResponseEmployee {
         String secondStr = salary.substring(salary.length() - 2);
         if(salary.length()<=2)firstStr="0";
         this.salary=String.format("%s dollar(s) %s cent(s)",firstStr,secondStr);
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSalary() {
+        return salary;
     }
 }
 
