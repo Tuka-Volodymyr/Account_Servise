@@ -1,6 +1,8 @@
 package account.services;
+import account.entity.security.Event;
 import account.entity.user.User;
-import account.exceptions.UserNotFoundException401;
+import account.exceptions.user.UserNotFoundException401;
+import account.repository.EventInfoRepository;
 import account.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +21,12 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
+    @Autowired
+    private EventInfoRepository eventInfoRepository;
     @Autowired
     private UserInfoRepository userInfoRepository;
+    @Autowired
+    private EventsService eventsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -40,7 +46,10 @@ public class UserService {
         if(accountAlreadyUse.isPresent())throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User exist!");
         checkPass(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setOperation("UNLOCK");
+        user.setFailedAttempts(0);
         userInfoRepository.save(user);
+        eventsService.createUser(user);
         return new ResponseEntity<>(user.returnUser(),HttpStatus.OK);
     }
     public void checkPass(String pass){
@@ -51,8 +60,6 @@ public class UserService {
                 "PasswordForNovemberPasswordForDecember";
         if(hackerData.contains(pass))throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The password is in the hacker's database!");
     }
-
-
     public ResponseEntity<?> changePass(UserDetails userDetails,String new_pass){
         User accountAlreadyUse = userInfoRepository
                 .findByEmailIgnoreCase(userDetails.getUsername())
@@ -60,9 +67,17 @@ public class UserService {
         checkPass(new_pass);
         if(passwordEncoder.matches(new_pass,accountAlreadyUse.getPassword()))throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The passwords must be different!");
         accountAlreadyUse.setPassword(passwordEncoder.encode(new_pass));
+        eventsService.changePassword(accountAlreadyUse);
         userInfoRepository.save(accountAlreadyUse);
         return new ResponseEntity<>(Map.of("email", accountAlreadyUse.getEmail().toLowerCase(),
                 "status", "The password has been updated successfully"),HttpStatus.OK);
+    }
+    public void resetUserAttempts(String email){
+        User accountAlreadyUse = userInfoRepository
+                .findByEmailIgnoreCase(email)
+                .orElseThrow(UserNotFoundException401::new);
+        accountAlreadyUse.setFailedAttempts(0);
+        userInfoRepository.save(accountAlreadyUse);
     }
 
 }

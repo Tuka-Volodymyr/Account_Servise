@@ -4,11 +4,13 @@ import account.entity.employee.Employee;
 import account.entity.employee.ResponseEmployee;
 import account.entity.user.User;
 
-import account.exceptions.EmployeeNotFoundException400;
+import account.exceptions.general.DataEmptyException400;
+import account.exceptions.employee.EmployeeNotFoundException400;
 
 
-import account.exceptions.UserNotFoundException401;
+import account.exceptions.user.UserNotFoundException401;
 import account.repository.EmployeeInfoRepository;
+import account.repository.EventInfoRepository;
 import account.repository.UserInfoRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
@@ -26,6 +28,8 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
     @Autowired
+    private EventInfoRepository eventInfoRepository;
+    @Autowired
     private UserInfoRepository userInfoRepository;
     @Autowired
     private EmployeeInfoRepository employeeInfoRepository;
@@ -33,7 +37,7 @@ public class EmployeeService {
     EntityManagerFactory entityManagerFactory;
     @Transactional
     public ResponseEntity<?> addPayment(ArrayList<Employee> listOfEmp){
-
+        if(listOfEmp==null)throw new DataEmptyException400();
         String availableDate="^(0[1-9]|1[012])-((19|2[0-9])[0-9]{2})$";
         for(Employee emp:listOfEmp){
             if (!userInfoRepository.existsByEmailIgnoreCase(emp.getEmployee())) {
@@ -48,6 +52,7 @@ public class EmployeeService {
         return new ResponseEntity<>(Map.of("status","Added successfully!"), HttpStatus.OK);
     }
     public ResponseEntity<?> changeSalary(Employee employee){
+        if(employee==null)throw new DataEmptyException400();
         Employee salaryAlreadyExist=employeeInfoRepository
                 .findByEmployeeIgnoreCaseAndPeriod(employee.getEmployee(),employee.getPeriod())
                 .orElseThrow(EmployeeNotFoundException400::new);
@@ -56,7 +61,6 @@ public class EmployeeService {
         employeeInfoRepository.save(salaryAlreadyExist);
         return new ResponseEntity<>(Map.of("status","Updated successfully!"),HttpStatus.OK);
     }
-    //some with period
     public ResponseEntity<?> getEmployeeSalaryWithPeriod(UserDetails userDetails, String period){
         User accountExist = userInfoRepository
                 .findByEmailIgnoreCase(userDetails.getUsername())

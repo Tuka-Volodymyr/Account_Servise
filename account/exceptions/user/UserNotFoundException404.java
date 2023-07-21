@@ -1,4 +1,4 @@
-package account.exceptions;
+package account.exceptions.user;
 
 
 import org.springframework.http.HttpStatus;

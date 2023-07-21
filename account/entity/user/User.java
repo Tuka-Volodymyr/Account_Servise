@@ -29,25 +29,21 @@ public class User {
     @Pattern(regexp = ".+@acme\\.com")
     private String email;
 
-//    @Size(min = 12,message = "The password length must be at least 12 chars!")
     @NotNull
     private String password;
     @JsonIgnore
     private ArrayList<String> roles;
     @JsonIgnore
+    private String operation;
+    @JsonIgnore
+    private int FailedAttempts;
+    @JsonIgnore
     @Transient
-    private String availableRoles="ADMINISTRATOR_ACCOUNTANT_USER";
+    private String availableRoles="ADMINISTRATOR_ACCOUNTANT_USER_AUDITOR";
 
 
     public ResponseUser returnUser() {
         return new ResponseUser(getId(),getName(),getLastname(),getEmail().toLowerCase(),getRoles());
-
-//        return "{id=" + id +
-//                ", name='" + name + '\'' +
-//                ", lastname='" + lastname + '\'' +
-//                ", email='" + email + '\'' +
-//                ", roles='"+ roles +'\'' +
-//                '}';
     }
 
     public String getLastname() {
@@ -63,7 +59,15 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return email.toLowerCase();
+    }
+
+    public int getFailedAttempts() {
+        return FailedAttempts;
+    }
+
+    public void setFailedAttempts(int failedAttempts) {
+        FailedAttempts = failedAttempts;
     }
 
     public String getPassword() {
@@ -104,5 +108,14 @@ public class User {
 
     public void setRoles(ArrayList<String> roles) {
         this.roles = roles;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 }

@@ -15,12 +15,12 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api")
 @Validated
-public class EmployeeRestService {
+public class EmployeeRestController {
     @Autowired
     public EmployeeService employeeService;
     @PreAuthorize("hasAnyRole('ROLE_ACCOUNTANT')")
     @PostMapping("/acct/payments")
-    public ResponseEntity<?> uploadPayment(@RequestBody ArrayList<Employee> listOfEmployees){
+    public ResponseEntity<?> uploadPayment(@RequestBody(required = false) ArrayList<Employee> listOfEmployees){
         return employeeService.addPayment(listOfEmployees);
     }
     @PreAuthorize("hasAnyRole('ROLE_ACCOUNTANT')")

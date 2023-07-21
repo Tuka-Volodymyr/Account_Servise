@@ -39,7 +39,7 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !user.getOperation().equals("LOCK");
     }
 
     @Override
