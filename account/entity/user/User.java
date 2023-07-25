@@ -45,77 +45,9 @@ public class User {
     public ResponseUser returnUser() {
         return new ResponseUser(getId(),getName(),getLastname(),getEmail().toLowerCase(),getRoles());
     }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
     public String getEmail() {
         return email.toLowerCase();
     }
 
-    public int getFailedAttempts() {
-        return FailedAttempts;
-    }
 
-    public void setFailedAttempts(int failedAttempts) {
-        FailedAttempts = failedAttempts;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public ArrayList<String> getRoles() {
-        return roles;
-    }
-
-    public String getAvailableRoles() {
-        return availableRoles;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAvailableRoles(String availableRoles) {
-        this.availableRoles = availableRoles;
-    }
-
-    public void setRoles(ArrayList<String> roles) {
-        this.roles = roles;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
 }

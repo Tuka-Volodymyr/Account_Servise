@@ -77,7 +77,6 @@ public class EmployeeService {
         return new ResponseEntity<>(responseEmployee,HttpStatus.OK);
 
     }
-    //order is wrong
     public ResponseEntity<?> getAllEmployeeSalary(UserDetails userDetails) {
         User accountExist = userInfoRepository
                 .findByEmailIgnoreCase(userDetails.getUsername())

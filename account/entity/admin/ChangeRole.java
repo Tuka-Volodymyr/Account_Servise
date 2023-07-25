@@ -14,27 +14,10 @@ public class ChangeRole {
     @NotBlank
     private String operation;
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
 
     public String getUser() {
         return user.toLowerCase();
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
 
-    public String getRole() {
-        return role;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
 }

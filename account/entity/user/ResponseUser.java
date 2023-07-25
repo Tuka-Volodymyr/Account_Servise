@@ -1,13 +1,10 @@
 package account.entity.user;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
-
+@Getter
+@Setter
 public class ResponseUser {
     private Integer id;
 
@@ -25,45 +22,5 @@ public class ResponseUser {
         this.roles=roles;
     }
 
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public ArrayList<String> getRoles() {
-        return roles;
-    }
-
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setRoles(ArrayList<String> roles) {
-        this.roles = roles;
-    }
 
 }

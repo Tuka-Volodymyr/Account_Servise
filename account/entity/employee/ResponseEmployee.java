@@ -32,36 +32,5 @@ public class ResponseEmployee {
         this.salary=String.format("%s dollar(s) %s cent(s)",firstStr,secondStr);
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
 }
 

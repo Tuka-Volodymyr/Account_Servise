@@ -32,52 +32,5 @@ public class Event {
         this.path=path;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public void setData(String date) {
-        this.date = date;
-    }
-
-    public void setObject(String object) {
-        this.object = object;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public String getDate() {
-
-        return date;
-    }
-
-    public String getObject() {
-        return object;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
 }
